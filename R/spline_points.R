@@ -14,11 +14,21 @@
 #' \dontrun{
 #'	  time<-1:12
 #'	  value<-c(0,0,1,2,5,7,3,0,0,0,0,0)
-#' 	  spline.points(time,value,s_param=0.35)
+#' 	  spline_points(value,time,s_param=0.35)
 #' }
 #' @export
 #' 
 spline_points <- function(value,time,s_param=0.35){
+#	if(F){
+#	  time<-1:12
+#	  value<-c(0,0,1,2,5,7,3,0,0,0,0,0)
+#	  spline_points(value,time,s_param=0.35)
+#  	smt <- stats::smooth.spline(time, value,spar=0.35)
+#	  plot(time,value)
+#	lines(predict(smt))
+#	lines(predict(smt,deriv=1))
+#	  plot(time,value)
+#	}
   
   smt <- stats::smooth.spline(time, value,spar=s_param)
   smt_pre <- smt$y
@@ -33,7 +43,7 @@ spline_points <- function(value,time,s_param=0.35){
   smt_df$info<-NA_character_
   smt_df$info[(smt_df$der>=maxder)&(maxderpos)]<-"Start"
   smt_df$info[(smt_df$der<=minder)&(maxderpos)]<-"End"
-  smt_df$info[(smt_df$value>=max(smt_df$value))&(max(value)>0)]<-"Max"
+  smt_df$info[(smt_df$value>=max(smt_df$value))&(max(smt_df$value)>0)]<-"Max"
   
   #output=
   #  smt_df %>% mutate(info = case_when(
