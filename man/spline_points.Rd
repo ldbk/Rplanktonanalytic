@@ -2,23 +2,30 @@
 % Please edit documentation in R/spline_points.R
 \name{spline_points}
 \alias{spline_points}
-\title{Identification of bloom descriptors dates based on smoothing splines}
+\title{spline_points}
 \usage{
-spline_points(x, s_param = 0.35)
+spline_points(value, time, s_param = 0.35)
 }
 \arguments{
-\item{x}{A dataframe containing the temporal information and the abundance of a species.}
+\item{value}{a numerical vector of values (abundances...)}
 
-\item{s_param}{The smoothing parameter (default 0.35).}
+\item{time}{a numerical vector of temporal units (month, week...)}
+
+\item{s_param}{the smoothing parameter corresponding to the spar parameters
+of the smooth.spline function (default 0.35).}
 }
 \value{
-A new dataframe containing temporal and species abundance info and date of start, maximum abundance and end of the bloom of the species.
+a dataframe containing the time vector, the value vector and info
+a character vector with 'Start', 'Max' and 'End' for the seasonal peak and NA
+for the other date
 }
 \description{
 Identification of bloom descriptors dates based on smoothing splines
 }
 \examples{
 \dontrun{
-spline.points(x,s_param=0.35)
+  time<-1:12
+  value<-c(0,0,1,2,5,7,3,0,0,0,0,0)
+	  spline.points(time,value,s_param=0.35)
 }
 }
