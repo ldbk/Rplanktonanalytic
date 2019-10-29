@@ -31,5 +31,3 @@ spline_points <- function(x,s_param=0.35){
   return(output)
 }
 
-?smooth.spline
-?predict
