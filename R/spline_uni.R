@@ -10,7 +10,6 @@
 #' @param obs_year minimum number of samples for each year in which the species shows an abundance>0 (default 2)
 #' @param s_param the smoothing parameter corresponding to the spar parameters
 #' @param t_scale temporal scale resolution of the data, 52 for weekly data, 12 for monthly data (default 52)
-
 #' of the smooth.spline function (default 0.35).
 #' @param S.NAME name of the species column
 #' 
@@ -21,8 +20,8 @@
 #' \dontrun{
 #'	  data("phytopknar")
 #'    phytopknar_ret <- ret_time(phytopknar)
-#'    phytopknar_ret_ord <- dft %>% dplyr::select(location,station,date,year,month,week,day,everything())
-#'    spline_uni(phytopknar_ret_ord,ab_treshold=0.75,obs_year=2,s_param=0.35,S.NAME="Cylindrotheca closterium")
+#'    phytopknar_ret_ord <- phytopknar_ret %>% dplyr::select(location,station,date,year,month,week,day,everything())
+#'    spline_uni(phytopknar_ret_ord,ab_treshold=0.75,obs_year=2,s_param=0.35,t_scale=52,S.NAME="Cylindrotheca closterium")
 #' }
 #' @export
 #' 

@@ -55,8 +55,4 @@ spline_points <- function(value,time,s_param=0.35){
   #    TRUE ~ NA_character_))
   
   return(smt_df)
-
-<<<<<<< HEAD
-=======
 }
->>>>>>> 1c5dc7aa8afaa5b12b8c977c597a1ff7afc0689b

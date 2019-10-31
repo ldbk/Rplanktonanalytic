@@ -3,5 +3,6 @@
 export(edwards)
 export(ret_time)
 export(selectaxa)
+export(spline_multi)
 export(spline_points)
 export(spline_uni)
