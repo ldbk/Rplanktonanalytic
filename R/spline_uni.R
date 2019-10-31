@@ -9,7 +9,7 @@
 #' @param ab_treshold quantile of the positive abundance distribution (default 0.75)
 #' @param obs_year minimum number of samples for each year in which the species shows an abundance>0 (default 2)
 #' @param s_param the smoothing parameter corresponding to the spar parameters
-#' @param t_scale temporal scale of the data, 52 for weekly data, 12 for monthly data (default 52)
+#' @param t_scale temporal scale resolution of the data, 52 for weekly data, 12 for monthly data (default 52)
 
 #' of the smooth.spline function (default 0.35).
 #' @param S.NAME name of the species column
