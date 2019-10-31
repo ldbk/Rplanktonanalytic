@@ -14,10 +14,11 @@
 #' @export
 #' 
 ret_time <- function(x){
-  x$day <- yday(x$date)
-  x$week <- week(x$date)
-  x$month <- month(x$date)
-  x$year <- year(x$date)
+  x$day <- lubridate::yday(x$date)
+  x$week <- lubridate::week(x$date)
+  x$month <- lubridate::month(x$date)
+  x$year <- lubridate::year(x$date)
   return(x)
 }
+
 
