@@ -4,22 +4,29 @@
 \alias{selectaxa}
 \title{selectaxa}
 \usage{
-selectaxa(x, fre_treshold = 10)
+selectaxa(x, fre_treshold = 50, start = 2)
 }
 \arguments{
-\item{x}{a dataframe containing a as.Date object named as "date"}
+\item{x}{a dataframe}
+
+\item{fre_treshold}{relative frequency treshold}
+
+\item{start}{number of column of the first species of the dataframe}
 }
 \value{
-a dataframe containing the time vectors (year, month...)
+a dataframe containing species above the specified treshold
 }
 \description{
-Return
+Calculate the relative frequency of species in a dataframe and return a new dataframe containing species with a relative frequency higher than a user-selected treshold
 }
 \examples{
 \dontrun{
-  date <- seq(as.Date("2000/1/1"), as.Date("2001/1/1"),length.out=10)
-   value <- c(seq(1,10,1))
-   df <- data.frame(date,value)
-   ret_time(df)
+   a <- seq(1,10,1)
+   sp1 <- c(1,1,1,1,1,1,1,1,1,1)
+   sp2 <- c(1,1,0,1,0,0,0,1,1,0)
+   sp3 <- c(1,0,0,1,0,0,0,1,0,0)
+   sp4 <- c(1,1,0,1,0,1,1,1,0,0)
+   df <- data.frame(a,sp1,sp2,sp3,sp4)
+   selectaxa(df)
 }
 }
