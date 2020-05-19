@@ -21,7 +21,7 @@
 #' @export
 #' 
 spline_points_2 <- 
-  function(value,time,s_param=0.35,control=0){
+  function(value,time,s_param=0.4,control=0.35){
     
     smt <- stats::smooth.spline(time, value,spar=s_param)
     smt_pre <- smt$y
@@ -41,13 +41,30 @@ spline_points_2 <-
     time_ref <- der_cond[1,1]
     
     smt_df$info<-NA
+    #find start
     if (!is.na(which(smt_df$time==time_ref)[1])) {
       smt_df$info[which(smt_df$time==time_ref)] <- "Start"
     } else {
       smt_df$info[which((smt_df$der>=maxder)&(maxderpos))] <- "Start"
     }
-    smt_df$info[(smt_df$der<=minder)&(maxderpos)]<-"End"
-    smt_df$info[(smt_df$value>=max(smt_df$value))&(max(smt_df$value)>0)]<-"Max"
+    #find max
+    max_val <- max(smt_df$value)
+    max_cond <- subset(smt_df,smt_df$value==max_val & max_val>0 )
+    max_time_ref <- max_cond[nrow(max_cond),1]
+    
+    if (length(max_cond$time)>1) {
+      smt_df$info[which(smt_df$time==max_time_ref)] <- "Max"
+    } else {
+      smt_df$info[(smt_df$value>=max(smt_df$value))&(max(smt_df$value)>0)]<-"Max"
+    }
+    
+    #find end
+    ref_end <- which(smt_df$info=="Max")
+    smt_df_end <- smt_df[ref_end:nrow(smt_df), ]
+    minder<-min(smt_df_end$der)
+    
+    min_der_row <- which(smt_df_end$der==minder)+(ref_end)-1
+    smt_df$info[min_der_row]<-"End"
     
     return(smt_df)
   }
