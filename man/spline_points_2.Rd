@@ -4,7 +4,7 @@
 \alias{spline_points_2}
 \title{spline_points_2}
 \usage{
-spline_points_2(value, time, s_param = 0.4, control = 0.35)
+spline_points_2(value, time, s_param = 0.4, control = 0)
 }
 \arguments{
 \item{value}{a numerical vector of values (abundances...)}

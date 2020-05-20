@@ -21,7 +21,7 @@
 #' @export
 #' 
 spline_points_2 <- 
-  function(value,time,s_param=0.4,control=0.35){
+  function(value,time,s_param=0.4,control=0){
     
     smt <- stats::smooth.spline(time, value,spar=s_param)
     smt_pre <- smt$y
@@ -41,30 +41,47 @@ spline_points_2 <-
     time_ref <- der_cond[1,1]
     
     smt_df$info<-NA
+    
     #find start
     if (!is.na(which(smt_df$time==time_ref)[1])) {
       smt_df$info[which(smt_df$time==time_ref)] <- "Start"
     } else {
       smt_df$info[which((smt_df$der>=maxder)&(maxderpos))] <- "Start"
     }
+    
     #find max
-    max_val <- max(smt_df$value)
+    ref_max<- which(smt_df$info=="Start")
+    smt_df_max<- smt_df[ref_max:nrow(smt_df), ]
+    max_val <- max(smt_df_max$value)
+    
     max_cond <- subset(smt_df,smt_df$value==max_val & max_val>0 )
     max_time_ref <- max_cond[nrow(max_cond),1]
-    
-    if (length(max_cond$time)>1) {
-      smt_df$info[which(smt_df$time==max_time_ref)] <- "Max"
-    } else {
-      smt_df$info[(smt_df$value>=max(smt_df$value))&(max(smt_df$value)>0)]<-"Max"
-    }
+    smt_df$info[which(smt_df$time==max_time_ref)] <- "Max"
     
     #find end
     ref_end <- which(smt_df$info=="Max")
+    tre_min <- quantile(subset(smt_df,value>0)$value,0.33)
+    n_obs <- round(nrow(smt_df)*0.075)
+    
     smt_df_end <- smt_df[ref_end:nrow(smt_df), ]
     minder<-min(smt_df_end$der)
+    smt_df_end$test_tremin <- ifelse(smt_df_end$value<tre_min,"T","F")
     
-    min_der_row <- which(smt_df_end$der==minder)+(ref_end)-1
-    smt_df$info[min_der_row]<-"End"
+    y <- which(smt_df_end$test_tremin=="T")
+    y <- y + ref_end -1
+    startIndx <- y[!(y-1) %in% y]
+    stopIndex <- y[!(y+1) %in% y]+1
+    rows_seq_length <- rbind(startIndx,stopIndex)
+    potential_ends <- rows_seq_length[1, ]
+    ends_seq <- data.frame(t(rbind(potential_ends,diff(rows_seq_length))))
+    end_rows <- subset(ends_seq,stopIndex>=n_obs)
+    
+    if (nrow(end_rows)>=1) {
+      end_row <- min(end_rows$potential_ends)
+      smt_df$info[end_row]<-"End"
+    } else {
+      smt_df$info[which(smt_df$der==minder)] <- "End"
+    }
     
     return(smt_df)
   }
