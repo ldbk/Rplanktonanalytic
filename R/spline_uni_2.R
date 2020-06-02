@@ -60,6 +60,16 @@ spline_uni_2 <-
       
       dfn1 <- dfn %>% select(species,year,time,value,treshold,everything())
       df_emp <- rbind(df_emp,dfn1) %>% as.data.frame()
-  }
+      df_emp2 <- merge(df_emp,data.frame(df1 %>% select(date,value)),all=TRUE)
+      
+      coalesce_all_columns <- function(df) {
+        return(coalesce(!!! as.list(df)))
+      }
+      
+      df_emp3 <- 
+        df_emp2 %>% 
+        group_by(date) %>%
+        summarise_all(coalesce_all_columns) %>% as.data.frame()
+    }
   return(df_emp)
 }
