@@ -4,7 +4,8 @@
 \name{phytopknar}
 \alias{phytopknar}
 \title{phytopknar}
-\format{a dataframe with 1841 observations and 166 variables
+\format{
+a dataframe with 1841 observations and 166 variables
 
 Columns:
 
@@ -15,7 +16,8 @@ station = station name
 date = date of the sampling in Date format
 
 column 4 to 1666 = species abundances in cell.mL-1. The species latin name is given
-by the column name.}
+by the column name.
+}
 \source{
 Smayda, T.J. & the Bunker C community (1959-1997).  Narragansett Bay
 Plankton Time Series.  Graduate School of Oceanography, URI.  Data available

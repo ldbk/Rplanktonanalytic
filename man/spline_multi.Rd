@@ -4,8 +4,7 @@
 \alias{spline_multi}
 \title{spline_multi}
 \usage{
-spline_multi(x, ab_treshold = 0.75, obs_year = 2, s_param = 0.35,
-  t_scale = 52)
+spline_multi(x, ab_treshold = 0.75, obs_year = 2, s_param = 0.35, t_scale = 52)
 }
 \arguments{
 \item{x}{a dataframe having the first 7 columns named as "location", "station", "date", "year", "month", "week", "day",
@@ -27,7 +26,7 @@ for the other date
 }
 \description{
 Identification of annual bloom descriptors dates based on smoothing splines for all the species of the dataframe.
-The function automatically exludes those years containing less than  75% of
+The function automatically exludes those years containing less than  75\% of
 the possible observations for the temporal scale considered.
 }
 \examples{
