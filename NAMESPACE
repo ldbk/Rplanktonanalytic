@@ -4,6 +4,12 @@ export(edwards)
 export(ret_time)
 export(selectaxa)
 export(spline_multi)
+export(spline_multi_2)
 export(spline_points)
+export(spline_points_2)
 export(spline_uni)
+<<<<<<< HEAD
 export(tsinfo)
+=======
+export(spline_uni_2)
+>>>>>>> 46527344f37f3888c33ddded3dd15688f9b7da3e
