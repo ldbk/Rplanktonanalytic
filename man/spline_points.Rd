@@ -26,6 +26,6 @@ Identification of bloom descriptors dates based on smoothing splines
 \dontrun{
   time<-1:12
   value<-c(0,0,1,2,5,7,3,0,0,0,0,0)
-	  spline.points(time,value,s_param=0.35)
+	  spline_points(value,time,s_param=0.35)
 }
 }
