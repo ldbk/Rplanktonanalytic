@@ -1,0 +1,35 @@
+---
+title: "edwards"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{edwards}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Edwards function example on Narrengasett
+
+```{r setup}
+library(Rplanktonanalytic)
+require(lubridate)
+require(ggplot2)
+listspp<-4:ncol(phytopknar)
+listyear<-unique(substr(phytopknar$date,1,4))
+rez<-data.frame()
+for(spp in listspp){
+	for(year in listyear){
+		tmp<-data.frame(phytopknar[substr(phytopknar$date,1,4)==year,c(3,spp)])
+		reztmp<-data.frame(spp=names(phytopknar)[spp],year=year,T=edwards(tmp[,2],lubridate::week(as.Date(tmp[,1]))))
+		rez<-rbind(rez,reztmp)
+	}
+}
+ggplot(rez,aes(x=year,y=T,color=spp,group=spp))+geom_point()+geom_line()+geom_smooth()+theme(legend.position="none")
+
+```
