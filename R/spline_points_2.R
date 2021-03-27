@@ -85,3 +85,4 @@ spline_points_2 <-
     
     return(smt_df)
   }
+
