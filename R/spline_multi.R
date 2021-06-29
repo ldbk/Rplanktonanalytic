@@ -1,5 +1,6 @@
 #' spline_multi
 #'
+#'
 #'Identification of annual bloom descriptors dates based on smoothing splines for all the species of the dataframe. 
 #'The function automatically exludes those years containing less than  75% of
 #'the possible observations for the temporal scale considered.
