@@ -33,7 +33,8 @@ spline_points <-
     maxder <- max(smt_df$der)
     minder <- min(smt_df$der)
     maxderpos <- maxder > 0
-
+    
+    tre_der <- maxder-(maxder*control)
     max_der_n <- which.max(smt_df$der) - past
     max_time <- smt_df[max_der_n, 1]
     #quant_der <- quantile(subset(smt_df, der > 0)$der, 0.9)
