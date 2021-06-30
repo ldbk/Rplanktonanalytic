@@ -7,7 +7,9 @@
 #' @param s_param the smoothing parameter corresponding to the spar parameters
 #' of the smooth.spline function (default 0.35).
 #' @param control control the flexibility of the function (default 0).
-#' @param past whether want to pick the observation just before max derivative
+#' @param past number of observations before the the maximum derivative. Default 
+#' 0, other values are useful whether the user wants to pick the moment just before 
+#' the max derivative (max growth).
 #'
 #' @return a dataframe containing the time vector, the value vector and info
 #' a character vector with 'Start', 'Max' and 'End' for the seasonal peak and NA
@@ -16,12 +18,12 @@
 #' \dontrun{
 #' time <- 1:12
 #' value <- c(0, 0, 1, 2, 5, 7, 3, 0, 0, 0, 0, 0)
-#' spline_points(value, time, s_param = 0.35, control = 0)
+#' spline_points(value, time, s_param = 0.35, control = 0, past=0)
 #' }
 #' @export
 #'
 spline_points <-
-  function(value, time, s_param = 0.4, control = 0, past = TRUE) {
+  function(value, time, s_param = NULL, control = NULL, past = NULL) {
     smt <- stats::smooth.spline(time, value, spar = s_param)
     smt_pre <- smt$y
     smt_der <- stats::predict(smt, deriv = 1)
@@ -32,16 +34,12 @@ spline_points <-
     minder <- min(smt_df$der)
     maxderpos <- maxder > 0
 
-    tre_der <- maxder - (maxder * control)
-    if (isTRUE(past)) {
-      max_der_n <- which.max(smt_df$der) - 1
-    }
-    else {
-      max_der_n <- which.max(smt_df$der)
-    }
+    max_der_n <- which.max(smt_df$der) - past
     max_time <- smt_df[max_der_n, 1]
-    quant_der <- quantile(subset(smt_df, der > 0)$der, 0.9)
-    der_cond <- subset(smt_df, der >= tre_der & der >= quant_der & time < max_time)
+    #quant_der <- quantile(subset(smt_df, der > 0)$der, 0.9)
+    der_cond <- subset(smt_df, der >= tre_der 
+                       #& der >= quant_der 
+                       & time < max_time)
     time_ref <- der_cond[1, 1]
 
     smt_df$info <- NA

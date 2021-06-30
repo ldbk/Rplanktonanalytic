@@ -4,7 +4,7 @@
 \alias{spline_points}
 \title{spline_points}
 \usage{
-spline_points(value, time, s_param = 0.4, control = 0, past = TRUE)
+spline_points(value, time, s_param = NULL, control = NULL, past = NULL)
 }
 \arguments{
 \item{value}{a numerical vector of values (abundances...)}
@@ -16,7 +16,9 @@ of the smooth.spline function (default 0.35).}
 
 \item{control}{control the flexibility of the function (default 0).}
 
-\item{past}{whether want to pick the observation just before max derivative}
+\item{past}{number of observations before the the maximum derivative. Default
+0, other values are useful whether the user wants to pick the moment just before
+the max derivative (max growth).}
 }
 \value{
 a dataframe containing the time vector, the value vector and info
@@ -28,8 +30,8 @@ Identification of bloom descriptors dates based on smoothing splines
 }
 \examples{
 \dontrun{
-  time<-1:12
-  value<-c(0,0,1,2,5,7,3,0,0,0,0,0)
-	  spline_points(value,time,s_param=0.35,control=0)
+time <- 1:12
+value <- c(0, 0, 1, 2, 5, 7, 3, 0, 0, 0, 0, 0)
+spline_points(value, time, s_param = 0.35, control = 0, past=0)
 }
 }

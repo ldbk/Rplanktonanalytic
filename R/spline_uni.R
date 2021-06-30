@@ -8,12 +8,10 @@
 #' other columns corresponds to the species columns
 #' @param ab_treshold quantile of the positive abundance distribution (default 0.75)
 #' @param obs_year minimum number of samples for each year in which the species shows an abundance>0 (default 2)
-#' @param s_param the smoothing parameter corresponding to the spar parameters
 #' @param t_scale temporal scale resolution of the data, 52 for weekly data, 12 for monthly data (default 52)
 #' of the smooth.spline function (default 0.35).
-#' @param control control the flexibility of the function (default 0)
 #' @param S.NAME name of the species column
-#' @param past whether want to pick the observation just before max derivative
+#' @inheritParams spline_points
 #' @return a dataframe containing the annual time vector, the value vector and info
 #' a character vector with 'Start', 'Max' and 'End' for the seasonal peak and NA
 #' for the other date
@@ -21,13 +19,15 @@
 #' \dontrun{
 #' data("phytopknar")
 #' phytopknar_ret <- ret_time(phytopknar)
-#' phytopknar_ret_ord <- phytopknar_ret %>% dplyr::select(location, station, date, year, month, week, day, everything())
-#' spline_uni(phytopknar_ret_ord, ab_treshold = 0.75, obs_year = 2, s_param = 0.35, t_scale = 52, control = 0, S.NAME = "Cylindrotheca closterium")
+#' phytopknar_ret_ord <- phytopknar_ret %>% dplyr::select(location, station, date,
+#'  year, month, week, day, everything())
+#' spline_uni(phytopknar_ret_ord, ab_treshold = 0.75, obs_year = 2, s_param = 0.35,
+#'  t_scale = 52, control = 0, S.NAME = "Cylindrotheca closterium",past=0)
 #' }
 #' @export
 #'
 spline_uni <-
-  function(x, ab_treshold = 0.5, obs_year = 2, s_param = 0.35, t_scale = 52, S.NAME = "", control = 0, past = TRUE) {
+  function(x, ab_treshold = NULL, S.NAME = "", obs_year = NULL, s_param = NULL, t_scale = NULL, control = NULL, past = NULL) {
     ## 1: remove NAs keep robust years
     x <- x %>% select(1:7, S.NAME)
     colnames(x)[ncol(x)] <- "value"
@@ -63,7 +63,7 @@ spline_uni <-
     for (i in y_levels) {
       dft <- df3 %>% filter(year == i)
 
-      dfn <- spline_points(dft$value, dft$day, s_param = s_param, control = control)
+      dfn <- spline_points(dft$value, dft$day, s_param = s_param, control = control, past = past)
 
       dfn$year <- rep(i, nrow(dfn))
       dfn$species <- rep(S.NAME, nrow(dfn))

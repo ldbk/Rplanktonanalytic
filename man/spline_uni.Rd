@@ -6,13 +6,13 @@
 \usage{
 spline_uni(
   x,
-  ab_treshold = 0.5,
-  obs_year = 2,
-  s_param = 0.35,
-  t_scale = 52,
+  ab_treshold = NULL,
   S.NAME = "",
-  control = 0,
-  past = TRUE
+  obs_year = NULL,
+  s_param = NULL,
+  t_scale = NULL,
+  control = NULL,
+  past = NULL
 )
 }
 \arguments{
@@ -21,18 +21,21 @@ other columns corresponds to the species columns}
 
 \item{ab_treshold}{quantile of the positive abundance distribution (default 0.75)}
 
+\item{S.NAME}{name of the species column}
+
 \item{obs_year}{minimum number of samples for each year in which the species shows an abundance>0 (default 2)}
 
-\item{s_param}{the smoothing parameter corresponding to the spar parameters}
+\item{s_param}{the smoothing parameter corresponding to the spar parameters
+of the smooth.spline function (default 0.35).}
 
 \item{t_scale}{temporal scale resolution of the data, 52 for weekly data, 12 for monthly data (default 52)
 of the smooth.spline function (default 0.35).}
 
-\item{S.NAME}{name of the species column}
+\item{control}{control the flexibility of the function (default 0).}
 
-\item{control}{control the flexibility of the function (default 0)}
-
-\item{past}{whether want to pick the observation just before max derivative}
+\item{past}{number of observations before the the maximum derivative. Default
+0, other values are useful whether the user wants to pick the moment just before
+the max derivative (max growth).}
 }
 \value{
 a dataframe containing the annual time vector, the value vector and info
@@ -46,9 +49,11 @@ the possible observations for the temporal scale considered.
 }
 \examples{
 \dontrun{
-  data("phytopknar")
-   phytopknar_ret <- ret_time(phytopknar)
-   phytopknar_ret_ord <- phytopknar_ret \%>\% dplyr::select(location,station,date,year,month,week,day,everything())
-   spline_uni(phytopknar_ret_ord,ab_treshold=0.75,obs_year=2,s_param=0.35,t_scale=52,control=0,S.NAME="Cylindrotheca closterium")
+data("phytopknar")
+phytopknar_ret <- ret_time(phytopknar)
+phytopknar_ret_ord <- phytopknar_ret \%>\% dplyr::select(location, station, date,
+ year, month, week, day, everything())
+spline_uni(phytopknar_ret_ord, ab_treshold = 0.75, obs_year = 2, s_param = 0.35,
+ t_scale = 52, control = 0, S.NAME = "Cylindrotheca closterium",past=0)
 }
 }
