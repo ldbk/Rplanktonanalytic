@@ -51,9 +51,13 @@ the possible observations for the temporal scale considered.
 \dontrun{
 data("phytopknar")
 phytopknar_ret <- ret_time(phytopknar)
-phytopknar_ret_ord <- phytopknar_ret \%>\% dplyr::select(location, station, date,
- year, month, week, day, everything())
-spline_uni(phytopknar_ret_ord, ab_treshold = 0.75, obs_year = 2, s_param = 0.35,
- t_scale = 52, control = 0, S.NAME = "Cylindrotheca closterium",past=0)
+phytopknar_ret_ord <- phytopknar_ret \%>\% dplyr::select(
+  location, station, date,
+  year, month, week, day, everything()
+)
+spline_uni(phytopknar_ret_ord,
+  ab_treshold = 0.75, obs_year = 2, s_param = 0.35,
+  t_scale = 52, control = 0, S.NAME = "Cylindrotheca closterium", past = 0
+)
 }
 }

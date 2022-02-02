@@ -15,10 +15,14 @@
 #' \dontrun{
 #' data("phytopknar")
 #' phytopknar_ret <- ret_time(phytopknar)
-#' phytopknar_ret_ord <- phytopknar_ret %>% dplyr::select(location, station, date,
-#'  year, month, week, day, everything())
-#' spline_multi(phytopknar_ret_ord, ab_treshold = 0.75, obs_year = 2, s_param = 0.35,
-#'  t_scale = 52, control = 0,past=0)
+#' phytopknar_ret_ord <- phytopknar_ret %>% dplyr::select(
+#'   location, station, date,
+#'   year, month, week, day, everything()
+#' )
+#' spline_multi(phytopknar_ret_ord,
+#'   ab_treshold = 0.75, obs_year = 2, s_param = 0.35,
+#'   t_scale = 52, control = 0, past = 0
+#' )
 #' }
 #' @export
 #'
@@ -27,7 +31,7 @@ spline_multi <-
     df_emp2 <- data.frame()
     for (j in 8:ncol(x)) {
       S.NAME <- names(x[j])
-      df1.1 <- x %>% select(1:7, j)
+      df1.1 <- x %>% dplyr::select(1:7, j)
 
       df2.1 <- spline_uni(df1.1, ab_treshold = ab_treshold, S.NAME = S.NAME, obs_year = obs_year, s_param = s_param, t_scale = t_scale, control = control, past = past)
       df_emp2 <- rbind(df_emp2, df2.1) %>% as.data.frame()

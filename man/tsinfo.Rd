@@ -36,10 +36,9 @@ with \eqn{x_m} is the abundance in month \eqn{M} (January=1,...Decembre=12).
 
 \examples{
 \dontrun{
-time<-1:12
-value<-c(0,0,1,2,5,7,3,0,0,0,0,0)
-edwards(time,value)
-
+time <- 1:12
+value <- c(0, 0, 1, 2, 5, 7, 3, 0, 0, 0, 0, 0)
+edwards(time, value)
 }
 }
 \author{

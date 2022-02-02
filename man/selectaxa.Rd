@@ -21,12 +21,12 @@ Calculate the relative frequency of species in a dataframe and return a new data
 }
 \examples{
 \dontrun{
-   a <- seq(1,10,1)
-   sp1 <- c(1,1,1,1,1,1,1,1,1,1)
-   sp2 <- c(1,1,0,1,0,0,0,1,1,0)
-   sp3 <- c(1,0,0,1,0,0,0,1,0,0)
-   sp4 <- c(1,1,0,1,0,1,1,1,0,0)
-   df <- data.frame(a,sp1,sp2,sp3,sp4)
-   selectaxa(df)
+a <- seq(1, 10, 1)
+sp1 <- c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+sp2 <- c(1, 1, 0, 1, 0, 0, 0, 1, 1, 0)
+sp3 <- c(1, 0, 0, 1, 0, 0, 0, 1, 0, 0)
+sp4 <- c(1, 1, 0, 1, 0, 1, 1, 1, 0, 0)
+df <- data.frame(a, sp1, sp2, sp3, sp4)
+selectaxa(df)
 }
 }

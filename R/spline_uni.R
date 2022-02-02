@@ -19,49 +19,53 @@
 #' \dontrun{
 #' data("phytopknar")
 #' phytopknar_ret <- ret_time(phytopknar)
-#' phytopknar_ret_ord <- phytopknar_ret %>% dplyr::select(location, station, date,
-#'  year, month, week, day, everything())
-#' spline_uni(phytopknar_ret_ord, ab_treshold = 0.75, obs_year = 2, s_param = 0.35,
-#'  t_scale = 52, control = 0, S.NAME = "Cylindrotheca closterium",past=0)
+#' phytopknar_ret_ord <- phytopknar_ret %>% dplyr::select(
+#'   location, station, date,
+#'   year, month, week, day, everything()
+#' )
+#' spline_uni(phytopknar_ret_ord,
+#'   ab_treshold = 0.75, obs_year = 2, s_param = 0.35,
+#'   t_scale = 52, control = 0, S.NAME = "Cylindrotheca closterium", past = 0
+#' )
 #' }
 #' @export
 #'
 spline_uni <-
   function(x, ab_treshold = NULL, S.NAME = "", obs_year = NULL, s_param = NULL, t_scale = NULL, control = NULL, past = NULL) {
     ## 1: remove NAs keep robust years
-    x <- x %>% select(1:7, S.NAME)
+    x <- x %>% dplyr::select(1:7, S.NAME)
     colnames(x)[ncol(x)] <- "value"
     df1 <- na.omit(x)
     ## 2: keep years containing N>=75% of possible observations
     ok_years <-
       df1 %>%
-      group_by(year) %>%
-      tally() %>%
-      filter(n > (t_scale * 0.75)) %>%
-      pull(year)
-    df2 <- df1 %>% filter(year %in% ok_years)
+      dplyr::group_by(.data$year) %>%
+      dplyr::tally() %>%
+      dplyr::filter(.data$n > (t_scale * 0.75)) %>%
+      dplyr::pull(.data$year)
+    df2 <- df1 %>% dplyr::filter(.data$year %in% ok_years)
     ## 3: consider only years in which species has/have at least X observations > 0
     year_ob <-
       df2 %>%
-      filter(value > 0) %>%
-      group_by(year) %>%
-      tally() %>%
-      filter(n > obs_year) %>%
-      pull(year)
+      dplyr::filter(.data$value > 0) %>%
+      dplyr::group_by(.data$year) %>%
+      dplyr::tally() %>%
+      dplyr::filter(.data$n > obs_year) %>%
+      dplyr::pull(.data$year)
     df3 <- df2 %>%
-      filter(year %in% year_ob) %>%
+      dplyr::filter(.data$year %in% year_ob) %>%
       droplevels()
     y_levels <- unique(df3$year)
 
     ## 4: calculate bloom abundance treshold
     tre <- df3 %>%
-      filter(value > 0) %>%
-      select(value)
+      dplyr::filter(.data$value > 0) %>%
+      dplyr::select(.data$value)
     tre <- quantile(tre$value, ab_treshold)
     #### loop spline_point for each year
     df_emp <- data.frame()
     for (i in y_levels) {
-      dft <- df3 %>% filter(year == i)
+      dft <- df3 %>% dplyr::filter(.data$year == i)
 
       dfn <- spline_points(dft$value, dft$day, s_param = s_param, control = control, past = past)
 
@@ -70,7 +74,7 @@ spline_uni <-
       dfn$treshold <- rep(tre, nrow(dfn))
       dfn$date <- dft$date
 
-      dfn1 <- dfn %>% select(species, year, date, time, value, treshold, everything())
+      dfn1 <- dfn %>% dplyr::select(.data$species, .data$year, .data$date, .data$time, .data$value, .data$treshold, tidyselect::everything())
       df_emp <- rbind(df_emp, dfn1) %>% as.data.frame()
     }
 

@@ -17,9 +17,9 @@ Return time vectors from a dataframe containing an as.Date object
 }
 \examples{
 \dontrun{
-  date <- seq(as.Date("2000/1/1"), as.Date("2001/1/1"),length.out=10)
-   value <- c(seq(1,10,1))
-   df <- data.frame(date,value)
-   ret_time(df)
+date <- seq(as.Date("2000/1/1"), as.Date("2001/1/1"), length.out = 10)
+value <- c(seq(1, 10, 1))
+df <- data.frame(date, value)
+ret_time(df)
 }
 }
