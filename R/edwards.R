@@ -15,7 +15,8 @@
 #' \deqn{T= \frac{\sum_{i=1}^{12}M.x_m}{\sum_{i=1}^{12}x_m}}
 #' with \eqn{x_m} is the abundance in month \eqn{M} (January=1,...Decembre=12).
 #'
-#' @return a numerical value corresponding to the timing of the seasonal peak in time unit corresponding the time vector
+#' @return a numerical value corresponding to the timing of the seasonal peak in
+#'  time unit corresponding the time vector
 #' @author Laurent Dubroca
 #'
 #' @source Edwards, M Richardson A.J. Impact of climate change on marine pelagic

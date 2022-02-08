@@ -17,7 +17,8 @@ edwards(value, time)
 \item{time}{a numerical vector of temporal units (month, week...)}
 }
 \value{
-a numerical value corresponding to the timing of the seasonal peak in time unit corresponding the time vector
+a numerical value corresponding to the timing of the seasonal peak in
+time unit corresponding the time vector
 }
 \description{
 This function computes the timing of a seasonal peak using Edwards and Richardson formula

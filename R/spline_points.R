@@ -37,8 +37,8 @@ spline_points <-
     tre_der <- maxder - (maxder * control)
     max_der_n <- which.max(smt_df$der)
     max_time <- smt_df[max_der_n, 1]
-    quant_der <- quantile(subset(smt_df, der > 0)$der, 0.9)
-    der_cond <- subset(smt_df, der >= tre_der & der >= quant_der & time < max_time)
+    quant_der <- quantile(subset(smt_df, smt_df$der > 0)$der, 0.9)
+    der_cond <- subset(smt_df, smt_df$der >= tre_der & smt_df$der >= quant_der & time < max_time)
     time_ref <- der_cond[1, 1]
 
     smt_df$info <- NA
